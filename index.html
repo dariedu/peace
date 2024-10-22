@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Лендинг с анимацией</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      overflow: hidden;
+    }
+
+    .image {
+      position: absolute;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+
+    #cat {
+      left: 38%;
+      top: 45%;
+      transform: translateY(-50%);
+    }
+
+    #bowl {
+      right: 38%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    #logo {
+      top: 10%;
+      left: 49%;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+
+    #heart {
+      scale: 850%;
+      bottom: 45%;
+      left: 70%;
+      transform: translateX(-50%);
+      z-index: -1;
+    }
+
+    /* Анимация биения сердца */
+    @keyframes heartbeat {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) scale(1);
+      }
+      40% {
+        transform: translateX(-50%) scale(1.2);
+      }
+      60% {
+        transform: translateX(-50%) scale(1.1);
+      }
+    }
+
+    /* Применяем анимацию к сердцу после его появления */
+    .animate-heart {
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    /* Стили для текста */
+    #text {
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: 2em;
+      font-family: 'Gerbera', sans-serif;
+      opacity: 0;
+      transition: opacity 2s ease, bottom 2s ease;
+    }
+
+    /* Класс для перемещения текста вверх */
+    .move-up {
+      bottom: 50%;
+    }
+
+    @font-face {
+      font-family: 'Gerbera';
+      src: url('./Gerbera-Light.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Изображения -->
+  <img id="cat" class="image" src="Котя 1.svg" alt="Котя" width="200">
+  <img id="bowl" class="image" src="Миска 2.svg" alt="Миска" width="200">
+  <img id="logo" class="image" src="Логотип.svg" alt="Логотип" width="300">
+  <img id="heart" class="image" src="Сердце.svg" alt="Сердце" width="100">
+
+  <!-- Текст -->
+  <div id="text">Обнимаем сердцем!</div>
+
+  <script>
+    // Функция для постепенного появления изображения
+    function fadeIn(element, delay, callback) {
+      setTimeout(() => {
+        element.style.opacity = 1;
+        if (callback) callback();
+      }, delay);
+    }
+
+    // Функция для плавного появления текста
+    function showText(element, delay) {
+      setTimeout(() => {
+        element.style.opacity = 1;
+        // После появления текста, переместить его вверх
+        setTimeout(() => {
+          element.classList.add('move-up');
+        }, 2000); // Ждем 2 секунды после появления текста
+      }, delay);
+    }
+
+    // Получаем элементы
+    const cat = document.getElementById('cat');
+    const bowl = document.getElementById('bowl');
+    const logo = document.getElementById('logo');
+    const heart = document.getElementById('heart');
+    const text = document.getElementById('text');
+
+    // Запускаем анимацию
+    fadeIn(cat, 1000);      // Котя появляется через 1 секунду
+    fadeIn(bowl, 2000);     // Миска появляется через 2 секунды
+    fadeIn(logo, 3000);     // Логотип появляется через 3 секунды
+    fadeIn(heart, 4000, () => {
+      // После появления сердца добавляем класс для анимации
+      heart.classList.add('animate-heart');
+    });
+
+    // Плавное появление текста
+    showText(text, 5000); // Текст появляется через 5 секунд
+  </script>
+</body>
+</html>
